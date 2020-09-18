@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
+import AppError from '../errors/AppError';
 
 interface Request {
   provider_id: string;
@@ -20,7 +21,7 @@ class CreateAppointmentService {
     );
 
     if (appointmentInSameDate) {
-      throw Error('ja existe agendamento para a data informada');
+      throw new AppError('ja existe agendamento para a data informada');
     }
 
     const appointment = appointmentRepository.create({
